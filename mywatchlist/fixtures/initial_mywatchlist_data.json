@@ -1,0 +1,112 @@
+[
+    {
+        "model": "mywatchlist.WatchlistItem",
+        "pk": 1,
+        "fields": {
+            "watched": "Yes",
+            "title": "Cars",
+            "rating": 9.0,
+            "release_date": "25/12/2006",
+            "review": "Good movie 9/10"
+        }
+    },
+    {
+        "model": "mywatchlist.WatchlistItem",
+        "pk": 2,
+        "fields": {
+            "watched": "No",
+            "title": "Back To The Future III",
+            "rating": 10.0,
+            "release_date": "08/09/1989",
+            "review": "A cult classic"
+        }
+    },
+    {
+        "model": "mywatchlist.WatchlistItem",
+        "pk": 3,
+        "fields": {
+            "watched": "Yes",
+            "title": "The Matrix",
+            "rating": 8.7,
+            "release_date": "02/10/2000",
+            "review": "SciFi thriller"
+        }
+    },
+    {
+        "model": "mywatchlist.WatchlistItem",
+        "pk": 4,
+        "fields": {
+            "watched": "No",
+            "title": "Top Gun Maverick",
+            "rating": 7.7,
+            "release_date": "09/08/2022",
+            "review": "Rehash of a classic"
+        }
+    },
+    {
+        "model": "mywatchlist.WatchlistItem",
+        "pk": 5,
+        "fields": {
+            "watched": "Yes",
+            "title": "Fate/Stay Night Heaven's Feel III",
+            "rating": 10.0,
+            "release_date": "27/08/2021",
+            "review": "A long awaited great closure to the story"
+        }
+    },
+    {
+        "model": "mywatchlist.WatchlistItem",
+        "pk": 6,
+        "fields": {
+            "watched": "No",
+            "title": "Rush",
+            "rating": 8.5,
+            "release_date": "14/12/2015",
+            "review": "A thrilling depiction of the Niki Lauda - James Hunt rivalry"
+        }
+    },
+    {
+        "model": "mywatchlist.WatchlistItem",
+        "pk": 7,
+        "fields": {
+            "watched": "Yes",
+            "title": "Frozen",
+            "rating": 7.0,
+            "release_date": "08/12/2013",
+            "review": "Good children's movie"
+        }
+    },
+    {
+        "model": "mywatchlist.WatchlistItem",
+        "pk": 8,
+        "fields": {
+            "watched": "No",
+            "title": "The Raid",
+            "rating": 8.0,
+            "release_date": "08/09/2012",
+            "review": "Action packed"
+        }
+    },
+    {
+        "model": "mywatchlist.WatchlistItem",
+        "pk": 9,
+        "fields": {
+            "watched": "Yes",
+            "title": "Spongebob The Movie",
+            "rating": 10.0,
+            "release_date": "25/09/2015",
+            "review": "Absolute legend"
+        }
+    },
+    {
+        "model": "mywatchlist.WatchlistItem",
+        "pk": 10,
+        "fields": {
+            "watched": "No",
+            "title": "Schumacher",
+            "rating": 10.0,
+            "release_date": "21/09/2021",
+            "review": "Depicts the path of the legendary 7-time Formula 1 world champion"
+        }
+    }
+]

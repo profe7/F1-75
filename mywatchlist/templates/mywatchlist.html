@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+ {% block content %}
+
+  <h1>Assignment 3 Assignment PBP/PBD</h1>
+
+  <h5>Name: Muhammad Fahreza Azka Arafat </h5>
+
+  <h5>Student ID: 2106752331 </h5>
+
+  <table>
+    <tr>
+      <th>Watched</th>
+      <th>Title</th>
+      <th>Rating</th>
+      <th>Release Date</th>
+      <th>Review</th>
+    </tr>
+    {% comment %} Add the data below this line {% endcomment %}
+    {% for data in data_watchlist %}
+    <tr>
+        <th>{{data.watched}}</th>
+        <th>{{data.title}}</th>
+        <th>{{data.rating}}</th>
+        <th>{{data.release_date}}</th>
+        <th>{{data.review}}</th>
+    </tr>
+{% endfor %}
+  </table>
+
+ {% endblock content %}
