@@ -1,0 +1,5 @@
+<div>
+    <h2>Anda akan mengupdate sebuah task, cek lagi</h2>
+ 	<form method="POST" action="">{% csrf_token %}{{todo}}
+    <br /><a href="{% url 'todolist:render_todolist' %}">Batal</a> <input class="btn-success" type="submit", value="Update", name="Update"></form>
+<div>
