@@ -35,6 +35,7 @@ def render_login(request):
 
 @login_required(login_url='/todolist/login/')
 def render_logout(request):
+    messages.success(request, 'Anda berhasil logout!')
     logout(request)
     return redirect('todolist:render_login')
 
