@@ -8,6 +8,6 @@ class Todo(forms.Form):
 class updateTodo(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'is_finished']
+        fields = ['is_finished']
 
 

@@ -7,9 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from todolist.forms import Todo, updateTodo
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.core import serializers
 from django.urls import reverse
 
 @login_required(login_url='/todolist/login/')
