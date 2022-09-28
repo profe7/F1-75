@@ -33,7 +33,7 @@ def render_login(request):
     context = {}
     return render(request, 'login.html', context)
 
-
+@login_required(login_url='/todolist/login/')
 def render_logout(request):
     logout(request)
     return redirect('todolist:render_login')
