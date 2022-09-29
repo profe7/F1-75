@@ -66,7 +66,6 @@ def render_create(request):
                 description = todo.cleaned_data['deskripsi']
             )
             todosave.save()
-            messages.success(request, 'Todo berhasil dibuat!')
             return redirect('todolist:render_todolist')
     todo = Todo()
     context = {
