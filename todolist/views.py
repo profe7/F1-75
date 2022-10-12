@@ -9,6 +9,9 @@ from django.shortcuts import redirect
 from todolist.forms import Todo, updateTodo
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.http import HttpResponse
+from django.core import serializers
+import json
 
 @login_required(login_url='/todolist/login/')
 def render_todolist(request):
@@ -100,3 +103,21 @@ def render_update(request, id):
         'todo':todo
     }
     return render(request, 'update.html', context)
+
+@login_required(login_url='/todolist/login/')
+def render_json(request):
+    data = Task.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', data), content_type='application/json')
+
+@login_required(login_url='/todolist/login/')
+def add_task(request):
+    if request.method == 'POST':
+        inputTODO = Task(
+            user = request.user,
+            title = request.POST['title'],
+            description = request.POST['description']
+        )
+        inputTODO.save()
+        return HttpResponse(serializers.serialize('json', [inputTODO,]), content_type='application/json')
+
+    return HttpResponse('')

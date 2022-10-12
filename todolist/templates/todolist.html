@@ -61,44 +61,235 @@
     box-shadow: 0px 2vh 2vw rgba(0, 0, 0, 0.77);
   }
 
+  .btn {
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-top: 0.8%;
+    margin-bottom: 0.5%;
+  }
+
+  .modal {
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    border-radius: 1%;
+    box-shadow: 0px 2vh 2vw rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    width: 30%;
+    height: 50%;
+    position: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
 </style>
 
+<body>
 <nav class="navbar">
   <div class="container-fluid">
     <a class="navbar-brand" href="#" style="color:whitesmoke;">Halo {{user.username}}!</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       </ul>
-      <button style="background-color: rgba(0, 0, 0, 0.5);"><a href="{% url 'todolist:render_create' %}">Create</a></button>
-      <button style="background-color: rgba(0, 0, 0, 0.5);"><a href="{% url 'todolist:render_logout' %}">Logout</a></button>
-  </div>
-</nav>
-
-  <table>
-    {% comment %} Add the data below this line {% endcomment %}
-    {% for task in tasks %}
-    <tr class="trclass">
-      <div class="card mb-3 mx-3 mt-3 flex-row">
-        <div class="row g-0 d-flex align-items-center justify-content-center"></div>
-          <div class="col-md-4">
-            <img src="https://www.nationaldebtlaw.com/wp-content/uploads/2016/09/to-do-e1413478675425.jpg" class="card-img" alt="todoimage">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">{{task.title}}</h5>
-              <p class="card-text"><small class="text-muted">{{task.date}}</small></p>
-              {% if task.is_finished %}
-              <h6 class="card-subtitle mb-2 text-muted">Task Sudah Selesai</h6>
-              {% else %}
-              <h6 class="card-subtitle mb-2 text-muted">Task Belum Selesai</h6>
-              {% endif %}
-              <p class="card-text">{{task.description}}</p>
-              <a href="{% url 'todolist:render_update' task.id %}" class="btn btn-primary">Update</a>
-              <a href="{% url 'todolist:render_delete' task.id %}" class="btn btn-primary">Delete</a>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-modal" style="background-color:rgba(0, 0, 0, 0.7);">
+        Create
+      </button>
+      <button type="button" class="btn btn-primary" style="background-color: rgba(0, 0, 0, 0.7);"><a href="{% url 'todolist:render_logout' %}">
+        Logout</a>
+      </button>
+      
+      <div class="modal fade" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="create-label">Create a New Task</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" action="/todolist/add/" id="create-task-form">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="task-name" class="col-form-label">Task Name:</label>
+                  <input type="text" class="form-control" id="title" name="title" form="create-task-form">
+                </div>
+                <div class="form-group">
+                  <label for="task-description" class="col-form-label">Task Description:</label>
+                  <textarea class="form-control" id="description" name="description" form="create-task-form"></textarea>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" id="create-button">Create</button>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
-      </div>
-    </tr>
-{% endfor %}
-</table>
+  </div>
+
+</nav>
+
+<table id="card-container"></table>
+
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script type="text/javascript">
+
+  
+  //Function to get data as JSON
+  function getJSON() {
+    var data = null;
+    $.ajax({
+      url: "{% url 'todolist:render_json' %}",
+      type: "GET",
+      dataType: "json",
+      async: false,
+      success: function (response) {
+        data = response;
+      }
+    });
+    return data;
+  }
+
+  async function createCards() {
+    document.getElementById("card-container").innerHTML = ""
+    //GET JSON data
+    let tasks = getJSON();
+    //Loop through JSON data
+    for (let i = 0; i < tasks.length; i++) {
+      //Create a card for each task
+      let card = document.createElement("div");
+      card.classList.add("card");
+      card.classList.add("mb-3");
+      card.classList.add("mx-3");
+      card.classList.add("mt-3");
+      card.classList.add("flex-row");
+      
+      //Create a new row for each card
+      let row = document.createElement("div");
+      row.classList.add("row");
+      row.classList.add("g-0");
+      row.classList.add("d-flex");
+      row.classList.add("align-items-center");
+      row.classList.add("justify-content-center");
+      
+      //Create a column for the image
+      let imageCol = document.createElement("div");
+      imageCol.classList.add("col-md-4");
+      
+      //Load image onto column
+      let image = document.createElement("img");
+      image.src = "https://www.nationaldebtlaw.com/wp-content/uploads/2016/09/to-do-e1413478675425.jpg";
+      image.classList.add("card-img");
+      image.alt = "todoimage";
+      
+      //Create a column for the card body
+      let bodyCol = document.createElement("div");
+      bodyCol.classList.add("col-md-8");
+      
+      //Create a card body
+      let body = document.createElement("div");
+      body.classList.add("card-body");
+      
+      //Create a title for the card
+      let title = document.createElement("h5");
+      title.classList.add("card-title");
+      title.innerHTML = tasks[i].fields.title;
+      console.log(tasks[i].title);
+      
+      //Create a date for the card
+      let date = document.createElement("p");
+      date.classList.add("card-text");
+      let dateSmall = document.createElement("small");
+      dateSmall.classList.add("text-muted");
+      dateSmall.innerHTML = tasks[i].fields.date;
+      date.appendChild(dateSmall);
+      
+      //Create a subtitle for the card
+      let subtitle = document.createElement("h6");
+      subtitle.classList.add("card-subtitle");
+      subtitle.classList.add("mb-2");
+      subtitle.classList.add("text-muted");
+      if (tasks[i].fields.is_finished) {
+        subtitle.innerHTML = "Task Sudah Selesai";
+      } else {
+        subtitle.innerHTML = "Task Belum Selesai";
+      }
+      
+      //Create a description for the card
+      let description = document.createElement("p");
+      description.classList.add("card-text");
+      description.innerHTML = tasks[i].fields.description;
+      
+      //Create a button for the card
+      let button = document.createElement("a");
+      button.href = "/todolist/update-task/" + tasks[i].pk;
+      button.classList.add("btn");
+      button.classList.add("btn-primary");
+      button.innerHTML = "Update";
+      
+      //Create a button for the card
+      let button2 = document.createElement("a");
+      button2.href = "/todolist/delete-task/" + tasks[i].pk;
+      button2.classList.add("btn");
+      button2.classList.add("btn-primary");
+      button2.innerHTML = "Delete";
+      
+      //Append the elements to the card
+      body.appendChild(title);
+      body.appendChild(date);
+      body.appendChild(subtitle);
+      body.appendChild(description);
+      body.appendChild(button);
+      body.appendChild(button2);
+      bodyCol.appendChild(body);
+      imageCol.appendChild(image);
+      row.appendChild(imageCol);
+      row.appendChild(bodyCol);
+      card.appendChild(row);
+      document.getElementById("card-container").appendChild(card);
+    }
+    
+  }
+  
+$(document).ready(() => {
+  createCards()
+
+  $("#create-task-form").on('submit', function() {
+    event.preventDefault();
+    var form = $(this);
+    url = form.attr('action');
+    method = form.attr('method');
+    data = {};
+
+    form.find('[name]').each(function(index, value) {
+      var that = $(this);
+      name = that.attr('name');
+      value = that.val();
+      data[name] = value;
+    });
+    
+    $.ajax({
+      url: url,
+      type: method,
+      data: data,
+      success: function(response) {
+        console.log(response);
+        createCards();
+        $('#create-modal').modal('hide');
+        $('#create-task-form')[0].reset();
+      }
+    });
+  });
+  
+  
+  return false;
+
+});
+
+</script>
+</body>
 {% endblock content %}
